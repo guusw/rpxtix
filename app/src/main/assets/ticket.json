@@ -1,0 +1,47 @@
+{
+    "ticket": [
+        {
+            "fromStationShort": "asn",
+            "toStationShort": "asd",
+            "routeInfo": [
+                {
+                    "fromStation": "Assen",
+                    "fromStationShort": "asn",
+                    "toStation": "Amsterdam C.",
+                    "toStationShort": "asd",
+                    "carrier": "NS"
+                }
+            ],
+            "travelerId": "oFAKktEej6UAAAFl3XB1jGdb",
+            "orderId": "dzEKktEehRQAAAFlx3B1jGdb",
+            "type": "MobileTicket",
+            "orderCreationDate": "2018-08-23T17:16:10",
+            "documentNo": "14741431",
+            "travelDate": "24-08-2018",
+            "returnDate": "24-08-2018",
+            "productName": "Enkele Reis Voordeeluren",
+            "sapCode": "ERE",
+            "travelClass": "2",
+            "fromStation": "Assen",
+            "toStation": "Amsterdam C.",
+            "routeChoice": "4",
+            "initials": "GJN",
+            "lastName": "Waals",
+            "birthDate": "23-11-1994",
+            "secutixTicketId": "0020910661",
+            "secutixMobilePDFLink": "https://www.ns.nl/producten/selfservice/pdf/?LineItemUUID\u003doFAKktEej6UAAAFl3XB1jGdb\u0026type\u003dmobile",
+            "price": 1200,
+            "barcodeBase64": "I1VUMDExMTg0TlMwMDIwLQIVAJq2xvwmSFyXF9I9sYEaGf3nYSvSAhRJlKM7dm5pCmqbvAgdL3bq6v/86gAAADAzMDB4nE1Qy27CMBD8FZ85wK7t2M4xCmmbioIUhaCeEBV74BnJKVTq13dtaJLxZWe9M97xevtWZHNAgEQhOi16AEhIEYxBqcBJQIcWjVkuiuV6Wy+yTxZpi1VeyzAKgCmgehQN+XtL/ot+DsdOFNcTnQH5iu0gQvJBUKFUedkwM8EucB3WCOtEBSPd7HbnTry+LwGHLiLIgbFNcExilTTZopyLl2r1IaSegZuF7UW9GjEwqHndKE2yrqMrGJU8OyizS/dNfr+7iHwKdjQ6CQDbj/53jHEcAB9qcKN4TZkx53hpGoLLxh+OJO6PH9qTFye6/RK7saW2MVn8MBKeDh2qxPZWxbpCZcIzLj6NcsrjuldK/VRWrBRN27I/nW+erqhHNrwv6sHGTZ74A6T/eyg\u003d",
+            "pdfLinkNl": "https://www.ns.nl/producten/selfservice/pdf/?LineItemUUID\u003doFAKktEej6UAAAFl3XB1jGdb\u0026type\u003dmobile",
+            "pdfLinkEn": "https://www.ns.nl/producten/en/selfservice/pdf/?LineItemUUID\u003doFAKktEej6UAAAFl3XB1jGdb\u0026type\u003dmobile",
+            "iconImage": {
+                "uri": "/api/v1/resource?resource\u003d%2Fcatalogue%2Ficon_single.png\u0026classifier\u003dmdpi",
+                "params": {
+                    "classifier": "mdpi",
+                    "height": "{height}"
+                }
+            }
+        }
+    ],
+    "shareUrl": "https://ns.nl/rpx?ticket\u0026orderId\u003ddzEKktEehRQAAAFlx3B1jGdb\u0026travelerId\u003doFAKktEej6UAAAFl3XB1jGdb"
+}

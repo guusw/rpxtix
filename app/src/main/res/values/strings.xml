@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">freerpxtix</string>
+    <string name="ticket_viewer_title">Vervoerbewijs</string>
+    <string name="ticket_viewer_close">SLUITEN</string>
+    <string name="ticket_viewer_flip">Omdraaien</string>
+</resources>
