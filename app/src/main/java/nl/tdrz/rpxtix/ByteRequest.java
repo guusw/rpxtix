@@ -1,4 +1,4 @@
-package nl.tdrz.freerpx;
+package nl.tdrz.rpxtix;
 
 import android.support.annotation.GuardedBy;
 import android.support.annotation.Nullable;

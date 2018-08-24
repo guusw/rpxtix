@@ -1,4 +1,4 @@
-package nl.tdrz.freerpx;
+package nl.tdrz.rpxtix;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package nl.tdrz.freerpx;
+package nl.tdrz.rpxtix;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -33,8 +33,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 
-public class TicketViewer extends AppCompatActivity {
-    public static final String TAG = "freerpx";
+public class Viewer extends AppCompatActivity {
+    public static final String TAG = "rpxtix";
     private RequestQueue requestQueue;
     private PdfiumCore pdfiumCore;
 
@@ -62,21 +62,30 @@ public class TicketViewer extends AppCompatActivity {
         LayoutInflater inflator = LayoutInflater.from(this);
         View v = inflator.inflate(R.layout.titleview, null);
 
+        View.OnClickListener finishClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Navigating up");
+                finish();
+            }
+        };
+
+        View upButton = v.findViewById(R.id.upButton);
+        upButton.setOnClickListener(finishClickListener );
+        View closeButton = v.findViewById(R.id.closeButton);
+        closeButton.setOnClickListener(finishClickListener );
 
         //assign the view to the actionbar
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(v, layoutParams);
-
-        // Custom arrow color in the action bar
-        //final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        //upArrow.setColorFilter(getResources().getColor(R.color.ns_blauw), PorterDuff.Mode.SRC_ATOP);
-        //getSupportActionBar().setHomeAsUpIndicator(upArrow);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ticket_viewer);
+        setContentView(R.layout.activity_viewer);
+
+        ticket = getIntent().getParcelableExtra("ticket");
 
         customizeActionBar();
 
@@ -102,6 +111,7 @@ public class TicketViewer extends AppCompatActivity {
                     computedTicketViewWidth = imageFrameView.getWidth();
                     computedTicketViewHeight = imageFrameView.getHeight();
                     ticketViewSizeComputed = true;
+
                     // Start loading ticket
                     loadTicketAsync();
                 }
@@ -110,24 +120,19 @@ public class TicketViewer extends AppCompatActivity {
     }
 
     private void loadTicketAsync() {
-        AssetManager am = getResources().getAssets();
         try {
-            InputStream stream = am.open("ticket.json");
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(stream, writer, Charset.defaultCharset());
-            String jsonString = writer.toString();
+            holderTextView.setText(ticket.initials + " " + ticket.lastName);
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-            Gson gson = new Gson();
-            TicketResponse ticketResponse = gson.fromJson(jsonString, TicketResponse.class);
-            if (ticketResponse.tickets.isEmpty()) {
-                throw new Exception("No tickets found in response");
+            PDFCache cache = PDFCache.getOrCreateInstance(getApplicationContext());
+            byte[] cachedData = cache.get(ticket);
+            if(cachedData  != null) {
+                Log.i(TAG, "loadTicketAsync: Using PDF data loaded from cache");
+                onPDFDownloaded(cachedData);
+            } else {
+                downloadPDFAsync(ticket.pdfLinkNl);
             }
 
-            ticket = ticketResponse.tickets.get(0);
-            holderTextView.setText(ticket.initials + " " + ticket.lastName);
-
-            requestQueue = Volley.newRequestQueue(getApplicationContext());
-            downloadPDFAsync(ticket.pdfLinkNl);
         } catch (Exception ex) {
             Log.e(TAG, "Failed to load ticket: ", ex);
         }
@@ -138,14 +143,7 @@ public class TicketViewer extends AppCompatActivity {
                 new Response.Listener<byte[]>() {
                     @Override
                     public void onResponse(byte[] response) {
-                        Log.d(TAG, "onResponse: Got PDF of length: " + response.length);
-
-                        try {
-                            renderedTicket = renderPDF(response);
-                            onTicketRendered();
-                        } catch (Exception e) {
-                            Log.e(TAG, "onResponse: Failed to render PDF", e);
-                        }
+                        onPDFDownloaded(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -155,6 +153,21 @@ public class TicketViewer extends AppCompatActivity {
                     }
                 });
         requestQueue.add(req);
+    }
+
+    private void onPDFDownloaded(byte[] pdfData) {
+        Log.d(TAG, "onPDFDownloaded: Got PDF of length: " + pdfData.length);
+        try {
+            renderedTicket = renderPDF(pdfData);
+
+            // Cache PDF data
+            PDFCache cache = PDFCache.getOrCreateInstance(getApplicationContext());
+            cache.setOrUpdate(ticket, pdfData);
+
+            onTicketRendered();
+        } catch (Exception e) {
+            Log.e(TAG, "onPDFDownloaded: Failed to render PDF", e);
+        }
     }
 
     private RenderedTicket renderPDF(byte[] pdfData) throws Exception {

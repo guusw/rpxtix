@@ -1,4 +1,4 @@
-package nl.tdrz.freerpx;
+package nl.tdrz.rpxtix;
 
 import android.graphics.Bitmap;
 
