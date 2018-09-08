@@ -35,10 +35,6 @@ public class Importer extends AppCompatActivity {
 
         Intent intent = getIntent();
         Uri importUri = intent.getData();
-        if(importUri == null ) {
-            // Test
-            importUri = Uri.parse("rpx://ticketUpdate?orderID=3.YKktEepi8AAAFko9MMBP7U&travelerID=xRYKktEek60AAAFktNMMBP7U");
-        }
 
         logTextView.append("Importing " + importUri.toString() + "\n");
 
