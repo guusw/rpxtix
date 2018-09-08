@@ -2,6 +2,8 @@
 
 rpxtix is an android application that displays NS train tickets in the way the the official NS app would allowing you to show tickets from you phone instead of having to print them or using the NS Reisplanner Xtra app.
 
+Release builds on this page are signed with key 0A:4C:9E:37:63:24:D7:E9:E6:DC:D6:A0:3E:87:46:D4:57:52:3C:9F
+
 ## Why
 
 According to the [official NS website](https://www.ns.nl/reisinformatie/ns-op-uw-mobiel/mobiele-tickets.html), when buying tickets online, tickets are only valid when they are printed on paper or used with the proprietary NS app.
